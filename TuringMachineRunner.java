@@ -5,7 +5,21 @@
 
 public class TuringMachineRunner {
     public static void main(String[] args) {
-        TuringMachine tm = buildMachine(17);
+        System.out.println("Enter B to run benchmark, N to run the machine");
+        char input = System.console().readLine().charAt(0);
+        if (input == 'B') {
+            System.out.println("Enter n:");
+            int n = Integer.parseInt(System.console().readLine());
+            benchmark(n);
+        } else if (input == 'N') {
+            System.out.println("Enter n:");
+            int n = Integer.parseInt(System.console().readLine());
+            runMachine(n);
+        }
+    }
+
+    static void runMachine(int n) {
+        TuringMachine tm = buildMachine(n);
         while (!tm.isFinal()) {
             char input = tm.tape.read();
             tm.processInput(input);
@@ -58,5 +72,17 @@ public class TuringMachineRunner {
         TuringMachine tm = new TuringMachine(states, s0, tape);
 
         return tm;
+    }
+
+    static void benchmark(int n) {
+        long startTime = System.nanoTime();
+        TuringMachine tm = buildMachine(n);
+        while (!tm.isFinal()) {
+            char input = tm.tape.read();
+            tm.processInput(input);
+        }
+        long endTime = System.nanoTime();
+        System.out.println("Time taken for n = " + n + ": " + (endTime - startTime) / 1000000 + "ms");
+        System.out.println(tm.calculateScore());
     }
 }
