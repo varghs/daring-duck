@@ -3,8 +3,12 @@
  * Used https://www.geeksforgeeks.org/arrays-stream-method-in-java/ to understand how to use IntStream.range() and mapToObj() to convert a string to a list of characters, as well as other array processing features like filter().
 */
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 public class TuringMachineRunner {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         System.out.println("Enter B to run benchmark, N to run the machine");
         char input = System.console().readLine().charAt(0);
         if (input == 'B') {
@@ -14,6 +18,7 @@ public class TuringMachineRunner {
         } else if (input == 'N') {
             System.out.println("Enter n:");
             int n = Integer.parseInt(System.console().readLine());
+            System.setOut(new PrintStream(new FileOutputStream("output.txt")));
             runMachine(n);
         }
     }
